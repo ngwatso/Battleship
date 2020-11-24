@@ -143,4 +143,88 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	rotateButton.addEventListener('click', rotate);
+
+	// !Move around user ship
+	ships.forEach((ship) => ship.addEventListener('dragstart', dragStart));
+
+	userSquares.forEach((square) =>
+		square.addEventListener('dragstart', dragStart)
+	);
+
+	userSquares.forEach((square) =>
+		square.addEventListener('dragover', dragOver)
+	);
+
+	userSquares.forEach((square) =>
+		square.addEventListener('dragenter', dragEnter)
+	);
+
+	userSquares.forEach((square) =>
+		square.addEventListener('dragleave', dragLeave)
+	);
+
+	userSquares.forEach((square) => square.addEventListener('drop', dragDrop));
+
+	userSquares.forEach((square) =>
+		square.addEventListener('dragEnd', dragEnd)
+	);
+
+	let selectedShipNameWithIndex;
+	let draggedShip;
+	let draggedShipLength;
+
+	ships.forEach((ship) =>
+		ship.addEventListener('mousedown', (e) => {
+			selectedShipNameWithIndex = e.target.id;
+			console.log(selectedShipNameWithIndex);
+		})
+	);
+
+	function dragStart() {
+		draggedShip = this;
+		draggedShipLength = this.childNodes.length;
+		console.log(draggedShip);
+	}
+
+	function dragOver(e) {
+		e.preventDefault();
+	}
+
+	function dragEnter(e) {
+		e.preventDefault();
+	}
+
+	function dragLeave() {
+		console.log('drag leave');
+	}
+
+	function dragDrop() {
+		let shipNameWithLastId = draggedShip.lastChild.id;
+		let shipClass = shipNameWithLastId.slice(0, -2);
+        console.log(shipClass);
+        let lastShipIndex = parseInt(shipNameWithLastId.substr(-1));
+        let shipLastId = lastShipIndex + parseInt(this.dataset.id);
+        console.log(shipLastId)
+
+        selectedShipIndex = parseInt(selectedShipNameWithIndex.substr(-1));
+
+        shipLastId = shipLastId - selectedShipIndex;
+        console.log(shipLastId);
+
+        if (isHorizontal) {
+            for (let i = 0; i < draggedShipLength; i++) {
+                userSquares[parseInt(this.dataset.id) - selectedShipIndex + i].classList.add('taken', shipClass);
+            }
+        } else if (!isHorizontal) {
+            for (let i = 0; i < draggedShipLength; i++) {
+                userSquares[parseInt(this.dataset.id) - selectedShipIndex + width * i].classList.add('taken', shipClass);
+            }
+        } else return;
+
+        displayGrid.removeChild(draggedShip);
+
+
+	}
+
+	function dragEnd() {}
 });
