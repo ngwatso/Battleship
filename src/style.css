@@ -141,3 +141,13 @@
 .carrier {
 	background-color: green;
 }
+
+.boom {
+	background-color: red;
+	border-radius: 50%;
+}
+
+.miss {
+	background-color: gray;
+	border-radius: 50%;
+}
