@@ -291,7 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	let draggedShipLength;
 
 	ships.forEach((ship) =>
-		ship.addEventListener("mousedown", "touchstart", (e) => {
+		ship.addEventListener("mousedown", (e) => {
 			selectedShipNameWithIndex = e.target.id;
 			console.log(selectedShipNameWithIndex);
 		})
